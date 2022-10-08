@@ -1,15 +1,34 @@
-﻿@{
+﻿@model TestASP.Models.ViewGenerationCat
+@{
     ViewData["Title"] = "BuyCat";
 }
 <dib class="text-left">
     <h1>Buy a cat</h1>
-    <table>
+     <p>
+          <a href="/BuyCat/AddCat">Add Cat</a>
+     </p>
+          
+    <table class="table">
+       
         <thead>
             <tr>
-                <th>breed</th>
-                <th>Age</th>
-                <th>Color</th>
+                <th >@Html.DisplayNameFor(m => ViewGenerationCat.Cats[0].Breed)</th>
+                <th >@Html.DisplayNameFor(m => ViewGenerationCat.Cats[0].Color)</th>
+                <th >@Html.DisplayNameFor(m => ViewGenerationCat.Cats[0].DateOfBirthday)</th>
+                <th >@Html.DisplayNameFor(m => ViewGenerationCat.Cats[0].Price)</th>
             </tr>
         </thead>
+        <tbody>
+            @foreach (var cats in ViewGenerationCat.Cats)
+            {
+                <tr>
+                    <td>@Html.DisplayFor(m => cats.Breed)</td>
+                    <td>@Html.DisplayFor(m => cats.Color)</td>
+                    <td>@Html.DisplayFor(m => cats.DateOfBirthday)</td>
+                    <td>@Html.DisplayFor(m => cats.Price)</td>
+                </tr>
+            }
+            
+        </tbody>
     </table>
 </dib>
