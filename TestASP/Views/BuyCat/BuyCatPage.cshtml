@@ -9,7 +9,6 @@
      </p>
           
     <table class="table">
-       
         <thead>
             <tr>
                 <th >@Html.DisplayNameFor(m => ViewGenerationCat.Cats[0].Breed)</th>
@@ -26,6 +25,11 @@
                     <td>@Html.DisplayFor(m => cats.Color)</td>
                     <td>@Html.DisplayFor(m => cats.DateOfBirthday)</td>
                     <td>@Html.DisplayFor(m => cats.Price)</td>
+                    <td>
+                        <a href="/BuyCat/Buy/@cats.Id">Buy</a> | 
+                        <a asp-controller="BuyCat" asp-action="Edit" asp-route-Id="@cats.Id">Edit</a>
+                    </td> 
+                    
                 </tr>
             }
             

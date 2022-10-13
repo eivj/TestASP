@@ -2,6 +2,8 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.Reflection.Metadata.Ecma335;
+using System.Threading.Tasks;
 using TestASP.Context;
 using TestASP.Models;
 
@@ -13,8 +15,8 @@ namespace TestASP.Controllers
         public IActionResult BuyCatPage()
         {
             List<Cat> cat = new List<Cat>();
-          
-           
+
+            //Reading data from database
             using (var context = new CatContext())
             {
                 foreach (var item in context.cats)
@@ -26,9 +28,25 @@ namespace TestASP.Controllers
             }
             return View();
         }
+
         public IActionResult AddCat()
         {
-           
+            return View();
+        }
+
+        /// <summary>
+        /// Delete the purchased cat from the database
+        /// </summary>
+        /// <param name="Id"></param>
+        /// <returns></returns>
+        public IActionResult Buy(int Id)
+        {
+            using (var context = new CatContext())
+            {
+                Cat cat_Remove = context.cats.Find(Id);
+                context.cats.Remove(cat_Remove);
+                context.SaveChanges();
+            }
             return View();
         }
 
@@ -57,6 +75,34 @@ namespace TestASP.Controllers
                 context.SaveChanges();
             }
             //HomePgae
+            return Redirect("~/");
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> Edit(int Id)
+        {
+            Cat Curent_Cat;
+            using(var context = new CatContext())
+            {
+                Curent_Cat = await context.cats.FindAsync(Id);
+            }
+            
+            return View(Curent_Cat);
+        }
+        [HttpPost]
+        public async Task<IActionResult> Edit(int Id, string breed, DateTime dateOfBirthday, decimal price, string color)
+        {
+            Cat Curent_Cat;
+            using (var context = new CatContext())
+            {
+                Curent_Cat = await context.cats.FindAsync(Id);
+                Curent_Cat.Breed = breed;
+                Curent_Cat.DateOfBirthday = dateOfBirthday;
+                Curent_Cat.Price = price;
+                Curent_Cat.Color = color;
+                context.SaveChanges();
+            }
+
             return Redirect("~/");
         }
     }

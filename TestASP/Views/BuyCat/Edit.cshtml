@@ -1,0 +1,38 @@
+﻿@model TestASP.Models.Cat
+@{
+    ViewData["Title"] = "Home Page";
+}
+
+<div>
+    <h1>Edit</h1>
+    <div class="row">
+    <div class="col-md-4">
+		<form action="~/BuyCat/Edit" method="post">
+			@*<div asp-validation-summary="ModelOnly" class="text-danger"></div>*@
+			<div class="form-group">
+				@*Not show in Veiw, but the data is being transferred*@
+				<input type ="hidden" name="Id" value="@Model.Id"/>
+				<label class="control-label">Breed</label>
+				<input asp-for="Breed" name="breed" class="form-control" />
+			</div>
+			<div class="form-group">
+				<label class="control-label">Date Of Birthday</label>
+				@*<input type="datetime" name="dateOfBirthday" class="form-control" />*@
+				<input asp-for="DateOfBirthday" name="dateofbirthday" class="form-control" />
+			</div>
+			<div class="form-group">
+				<label class="font-group">Price</label>
+				<input type="text" name="price" value="@Model.Price" class="form-control"/>
+			@*	<input asp-for="Price" class="form-control" />*@
+			</div>
+			<div class="form-group">
+				<label class="form-group">Color</label>
+				<input type="text" name="color" value="@Model.Color" class="form-control" />
+				@*<input asp-for="Color" class="form-control" />*@
+			</div>
+			<p><input class="btn btn-primary" type="submit" value="Отправить" /></p>
+		
+		</form>
+    </div>
+</div>
+</div>
