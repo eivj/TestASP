@@ -1,38 +1,39 @@
-﻿@model TestASP.Models.ViewGenerationCat
-@{
-    ViewData["Title"] = "BuyCat";
-}
-<dib class="text-left">
+﻿@using TestASP.Models
+
+
+<div>
     <h1>Buy a cat</h1>
-     <p>
+      <p>
           <a href="/BuyCat/AddCat">Add Cat</a>
      </p>
-          
-    <table class="table">
-        <thead>
-            <tr>
-                <th >@Html.DisplayNameFor(m => ViewGenerationCat.Cats[0].Breed)</th>
-                <th >@Html.DisplayNameFor(m => ViewGenerationCat.Cats[0].Color)</th>
-                <th >@Html.DisplayNameFor(m => ViewGenerationCat.Cats[0].DateOfBirthday)</th>
-                <th >@Html.DisplayNameFor(m => ViewGenerationCat.Cats[0].Price)</th>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach (var cats in ViewGenerationCat.Cats)
+     <table class="table table-striped">
+         <thead>
+             <tr>               
+                @foreach (Cat item in Model)
+                {
+                    <th >@Html.DisplayNameFor(m => item.Breed)</th>
+                    <th >@Html.DisplayNameFor(m => item.DateOfBirthday)</th>
+                    <th >@Html.DisplayNameFor(m => item.Color)</th>
+                    <th >@Html.DisplayNameFor(m => item.Price)</th>
+                    break;
+                }
+             </tr>
+         </thead>
+
+         <tbody>
+            @foreach (Cat item in Model)
             {
-                <tr>
-                    <td>@Html.DisplayFor(m => cats.Breed)</td>
-                    <td>@Html.DisplayFor(m => cats.Color)</td>
-                    <td>@Html.DisplayFor(m => cats.DateOfBirthday)</td>
-                    <td>@Html.DisplayFor(m => cats.Price)</td>
-                    <td>
-                        <a href="/BuyCat/Buy/@cats.Id">Buy</a> | 
-                        <a asp-controller="BuyCat" asp-action="Edit" asp-route-Id="@cats.Id">Edit</a>
-                    </td> 
-                    
-                </tr>
+                 <tr>
+                     <td>@item.Breed</td>
+                     <td>@item.DateOfBirthday</td>
+                     <td>@item.Color</td>
+                     <td>@item.Price</td>
+                         <td>
+                            <a href="/BuyCat/Buy">Buy</a> | 
+                            <a asp-controller="BuyCat" asp-action="Edit" asp-route-Id="@item.Id">Edit</a>
+                        </td> 
+                 </tr>
             }
-            
-        </tbody>
-    </table>
-</dib>
+         </tbody>
+     </table>
+</div>

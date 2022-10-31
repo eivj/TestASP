@@ -2,31 +2,27 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.Data.Entity.Core.Metadata.Edm;
 using System.Reflection.Metadata.Ecma335;
 using System.Threading.Tasks;
 using TestASP.Context;
+using TestASP.Data;
+using TestASP.Interfaces;
 using TestASP.Models;
 
 namespace TestASP.Controllers
 {
     public class BuyCatController : Controller
     {
-      
-        public IActionResult BuyCatPage()
+        private readonly ICatData catdata;
+
+        public BuyCatController(ICatData catdata)
         {
-            List<Cat> cat = new List<Cat>();
-
-            //Reading data from database
-            using (var context = new CatContext())
-            {
-                foreach (var item in context.cats)
-                {
-                    cat.Add(item);
-                }
-                ViewGenerationCat.Cats = cat;
-
-            }
-            return View();
+            this.catdata = catdata;
+        }
+        public IActionResult BuyCatPage()
+        {    
+            return View(catdata.GetCat());
         }
 
         public IActionResult AddCat()
@@ -34,21 +30,21 @@ namespace TestASP.Controllers
             return View();
         }
 
-        /// <summary>
-        /// Delete the purchased cat from the database
-        /// </summary>
-        /// <param name="Id"></param>
-        /// <returns></returns>
-        public IActionResult Buy(int Id)
-        {
-            using (var context = new CatContext())
-            {
-                Cat cat_Remove = context.cats.Find(Id);
-                context.cats.Remove(cat_Remove);
-                context.SaveChanges();
-            }
-            return View();
-        }
+        ///// <summary>
+        ///// Delete the purchased cat from the database
+        ///// </summary>
+        ///// <param name="Id"></param>
+        ///// <returns></returns>
+        //public IActionResult Buy(int Id)
+        //{
+        //    using (catContext)
+        //    {
+        //        Cat cat_Remove = catContext.cats.Find(Id);
+        //        catContext.cats.Remove(cat_Remove);
+        //        catContext.SaveChanges();
+        //    }
+        //    return View();
+        //}
 
         /// <summary>
         /// Adding data to the database
@@ -61,49 +57,57 @@ namespace TestASP.Controllers
         [HttpPost]
         public IActionResult AddDataToContext(string breed, DateTime dateOfBirthday, decimal price, string color)
         {
-            using (var context = new CatContext())
+            var cat = new Cat()
             {
-                context.cats.Add(
-                    new Cat()
-                    {
-                        Breed = breed,
-                        DateOfBirthday = dateOfBirthday,
-                        Price = price,
-                        Color = color
+                Breed = breed,
+                DateOfBirthday = dateOfBirthday,
+                Price = price,
+                Color = color
 
-                    });
-                context.SaveChanges();
-            }
+            };
+            catdata.AddCat(cat);
             //HomePgae
             return Redirect("~/");
         }
-
         [HttpGet]
         public async Task<IActionResult> Edit(int Id)
         {
-            Cat Curent_Cat;
-            using(var context = new CatContext())
-            {
-                Curent_Cat = await context.cats.FindAsync(Id);
-            }
-            
+             Cat Curent_Cat = await catdata.ShowCatForEdit(Id);
+
             return View(Curent_Cat);
         }
         [HttpPost]
-        public async Task<IActionResult> Edit(int Id, string breed, DateTime dateOfBirthday, decimal price, string color)
+        public IActionResult Edit(int Id, string breed, DateTime dateOfBirthday, decimal price, string color)
         {
-            Cat Curent_Cat;
-            using (var context = new CatContext())
-            {
-                Curent_Cat = await context.cats.FindAsync(Id);
-                Curent_Cat.Breed = breed;
-                Curent_Cat.DateOfBirthday = dateOfBirthday;
-                Curent_Cat.Price = price;
-                Curent_Cat.Color = color;
-                context.SaveChanges();
-            }
-
+            catdata.EditCat(Id, breed, dateOfBirthday, price, color);
             return Redirect("~/");
         }
+        //[HttpGet]
+        //public async Task<IActionResult> Edit(int Id)
+        //{
+        //    Cat Curent_Cat;
+        //    using (catContext)
+        //    {
+        //        Curent_Cat = await catContext.cats.FindAsync(Id);
+        //    }
+
+        //    return View(Curent_Cat);
+        //}
+        //[HttpPost]
+        //public async Task<IActionResult> Edit(int Id, string breed, DateTime dateOfBirthday, decimal price, string color)
+        //{
+        //    Cat Curent_Cat;
+        //    using (catContext)
+        //    {
+        //        Curent_Cat = await catContext.cats.FindAsync(Id);
+        //        Curent_Cat.Breed = breed;
+        //        Curent_Cat.DateOfBirthday = dateOfBirthday;
+        //        Curent_Cat.Price = price;
+        //        Curent_Cat.Color = color;
+        //        catContext.SaveChanges();
+        //    }
+
+        //    return Redirect("~/");
+        //}
     }
 }

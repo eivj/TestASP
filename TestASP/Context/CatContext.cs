@@ -2,17 +2,17 @@
 using TestASP.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Protocols.OpenIdConnect;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using TestASP.AuthCatApp;
+using System.Runtime.ConstrainedExecution;
 
 namespace TestASP.Context
 {
-    public class CatContext : DbContext
+    public class CatContext : IdentityDbContext<User>
     {   
         public DbSet<Cat> cats { get; set; }
-        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-        {
-            optionsBuilder.UseSqlServer(@"Server=(localdb)\MSSQLLocalDB;Database=CatalogsOfCats;Trusted_Connection=True; MultipleActiveResultSets=True;");
-            
-           
-        }
+        public CatContext(DbContextOptions options) : base(options) { }
+
+
     }
 }
