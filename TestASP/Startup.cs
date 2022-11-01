@@ -54,7 +54,7 @@ namespace TestASP
             {
                 // конфигурация Cookie с целью использования их для хранения авторизации
                 options.Cookie.HttpOnly = true;
-                options.Cookie.Expiration = TimeSpan.FromMinutes(30);
+                //options.Cookie.Expiration = TimeSpan.FromMinutes(30);
                 options.LoginPath = "/Account/Login";
                 options.LogoutPath = "/Account/Logout";
                 options.SlidingExpiration = true;

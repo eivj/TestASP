@@ -1,10 +1,10 @@
-﻿using System;
-using TestASP.Models;
+﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.IdentityModel.Protocols.OpenIdConnect;
-using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using System;
+using System.Collections.Generic;
+using System.Text;
 using TestASP.AuthCatApp;
-using System.Runtime.ConstrainedExecution;
+using TestASP.Models;
 
 namespace TestASP.Context
 {
@@ -12,7 +12,6 @@ namespace TestASP.Context
     {   
         public DbSet<Cat> cats { get; set; }
         public CatContext(DbContextOptions options) : base(options) { }
-
 
     }
 }
