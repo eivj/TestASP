@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.Entity.Core.Metadata.Edm;
 using System.Threading.Tasks;
 using TestASP.Context;
 using TestASP.Interfaces;
@@ -23,18 +24,42 @@ namespace TestASP.Data
     //    {
     //        data.Add(cat);
     //    }
-    //    public async Task EditCat(int id, string breed, DateTime dateOfBirthday, decimal price, string color)
-    //    {       
 
+    //    public decimal BuyTheCat(int Id)
+    //    {
+    //        throw new NotImplementedException();
+    //    }
+
+    //    public async Task EditCat(int id, string breed, DateTime dateOfBirthday, decimal price, string color)
+    //    {
+    //        Cat cat = data.Find(x => x.Id == id);
+    //        int CurrentIndexCat = data.IndexOf(cat);
+    //        Cat ModifiedCat = new Cat()
+    //        {
+    //            Id = id,
+    //            Breed = breed,
+    //            DateOfBirthday = dateOfBirthday,
+    //            Price = price,
+    //            Color = color
+    //        };
+    //        data[CurrentIndexCat] = ModifiedCat;
+          
     //    }
     //    public IEnumerable<Cat> GetCat()
     //    {
     //        return data;
     //    }
+
+    //    public void RemoveTheCat(int Id)
+    //    {
+    //        throw new NotImplementedException();
+    //    }
+
     //    public async Task<Cat> ShowCatForEdit(int id)
     //    {
-    //        return await new Cat();
-         
+    //        Cat currentCat = new Cat();
+    //        currentCat = data.Find(x => x.Id == id);
+    //        return currentCat;
     //    }
     //}
 }

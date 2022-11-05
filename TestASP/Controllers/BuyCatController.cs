@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -15,6 +16,7 @@ namespace TestASP.Controllers
     public class BuyCatController : Controller
     {
         private readonly ICatData catdata;
+      
 
         public BuyCatController(ICatData catdata)
         {
@@ -24,27 +26,28 @@ namespace TestASP.Controllers
         {    
             return View(catdata.GetCat());
         }
-
+        [HttpGet]
+        [Authorize]
         public IActionResult AddCat()
         {
             return View();
         }
 
+        public IActionResult Delete(int id)
+        {
+            catdata.RemoveTheCat(id);
+            return Redirect("~/");
+        }
         ///// <summary>
         ///// Delete the purchased cat from the database
         ///// </summary>
         ///// <param name="Id"></param>
         ///// <returns></returns>
-        //public IActionResult Buy(int Id)
-        //{
-        //    using (catContext)
-        //    {
-        //        Cat cat_Remove = catContext.cats.Find(Id);
-        //        catContext.cats.Remove(cat_Remove);
-        //        catContext.SaveChanges();
-        //    }
-        //    return View();
-        //}
+        public  IActionResult Buy(int id)
+        {      
+            MoneyFromSales.AllMoney += catdata.BuyTheCat(id);
+            return View(MoneyFromSales.AllMoney);
+        }
 
         /// <summary>
         /// Adding data to the database
@@ -72,42 +75,15 @@ namespace TestASP.Controllers
         [HttpGet]
         public async Task<IActionResult> Edit(int Id)
         {
-             Cat Curent_Cat = await catdata.ShowCatForEdit(Id);
-
+            Cat Curent_Cat = await catdata.ShowCatForEdit(Id);
             return View(Curent_Cat);
         }
         [HttpPost]
-        public IActionResult Edit(int Id, string breed, DateTime dateOfBirthday, decimal price, string color)
+        public async Task<IActionResult> Edit(int Id, string breed, DateTime dateOfBirthday, decimal price, string color)
         {
-            catdata.EditCat(Id, breed, dateOfBirthday, price, color);
+            await catdata.EditCat(Id, breed, dateOfBirthday, price, color);
             return Redirect("~/");
         }
-        //[HttpGet]
-        //public async Task<IActionResult> Edit(int Id)
-        //{
-        //    Cat Curent_Cat;
-        //    using (catContext)
-        //    {
-        //        Curent_Cat = await catContext.cats.FindAsync(Id);
-        //    }
-
-        //    return View(Curent_Cat);
-        //}
-        //[HttpPost]
-        //public async Task<IActionResult> Edit(int Id, string breed, DateTime dateOfBirthday, decimal price, string color)
-        //{
-        //    Cat Curent_Cat;
-        //    using (catContext)
-        //    {
-        //        Curent_Cat = await catContext.cats.FindAsync(Id);
-        //        Curent_Cat.Breed = breed;
-        //        Curent_Cat.DateOfBirthday = dateOfBirthday;
-        //        Curent_Cat.Price = price;
-        //        Curent_Cat.Color = color;
-        //        catContext.SaveChanges();
-        //    }
-
-        //    return Redirect("~/");
-        //}
+       
     }
 }

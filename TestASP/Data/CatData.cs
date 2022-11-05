@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.Entity.Core.Mapping;
 using System.Threading.Tasks;
 using TestASP.Context;
 using TestASP.Interfaces;
@@ -10,6 +11,7 @@ namespace TestASP.Data
     public class CatData : ICatData
     {
         private readonly CatContext catContext;
+        public decimal AllMoney;
         public CatData(CatContext catContext)
         {
             this.catContext = catContext;
@@ -31,6 +33,7 @@ namespace TestASP.Data
                 catForEdit.Color = color;
                 catContext.SaveChanges();
             }
+            //return catForEdit;
         }
 
 
@@ -41,13 +44,20 @@ namespace TestASP.Data
             return currentCat;
         }
 
-        //public Cat SearchCat(int id)
-        //{
-        //    Cat cat = new Cat();
-        //    cat =  catContext.cats.Find(id);
-
-        //    return cat;
-        //}
+        public void RemoveTheCat(int id)
+        {
+            Cat CatForDelete = catContext.cats.Find(id);
+            catContext.cats.Remove(CatForDelete);
+            catContext.SaveChanges();
+        }
+        public decimal BuyTheCat(int id)
+        {
+            Cat CatForDelete = catContext.cats.Find(id);
+            decimal money = CatForDelete.Price;
+            catContext.cats.Remove(CatForDelete);
+            catContext.SaveChanges();    
+            return money;
+        }
         public IEnumerable<Cat> GetCat()
         {
             return this.catContext.cats;
