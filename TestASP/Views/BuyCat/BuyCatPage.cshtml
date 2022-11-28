@@ -1,12 +1,9 @@
 ﻿@using TestASP.Models
 
-@if (User.Identity.IsAuthenticated)
-{
+
     <div>
         <h1>Buy a cat</h1>
-        <p>
-            
-            
+        <p>         
             <a href="/BuyCat/AddCat">Add Cat</a>
         </p>
        
@@ -32,48 +29,15 @@
                         <td>@item.Color</td>
                         <td>@item.Price</td>
                         <td>
-                            <a asp-controller="BuyCat" asp-action="Buy" asp-route-Id="@item.Id">Buy</a> |
-                            <a asp-controller="BuyCat" asp-action="Edit" asp-route-Id="@item.Id">Edit</a> |
-                            <a asp-controller="BuyCat" asp-action="Delete" asp-route-Id="@item.Id">Remove</a>
+                            <a asp-controller="BuyCat" asp-action="Buy" asp-route-Id="@item.Id">Buy</a>
+                            @if (User.Identity.IsAuthenticated)
+                            { 
+                                  <a asp-controller="BuyCat" asp-action="Edit" asp-route-Id="@item.Id">Edit</a>
+                                  <a asp-controller="BuyCat" asp-action="Delete" asp-route-Id="@item.Id">Remove</a>
+                            }
                         </td> 
                     </tr>
                 }
             </tbody>
         </table>
     </div>
-}
-else
-{
-    <div>
-         <h1>Buy a cat</h1> 
-         <table class="table table-striped">
-             <thead>
-                 <tr>               
-                 @foreach (Cat item in Model)
-                 {
-                     <th>@Html.DisplayNameFor(m => item.Breed)</th>
-                     <th>@Html.DisplayNameFor(m => item.DateOfBirthday)</th>
-                     <th>@Html.DisplayNameFor(m => item.Color)</th>
-                     <th>@Html.DisplayNameFor(m => item.Price)</th>
-                     break;
-                 }
-                 </tr>
-             </thead>
-
-             <tbody>
-             @foreach (Cat item in Model)
-             {
-                 <tr>
-                     <td>@item.Breed</td>
-                     <td>@item.DateOfBirthday</td>
-                     <td>@item.Color</td>
-                     <td>@item.Price</td>
-                     <td>
-                         <a asp-controller="BuyCat" asp-action="Buy" asp-route-Id="@item.Id">Buy</a>
-                     </td> 
-                 </tr>
-             }
-             </tbody>
-         </table>
-    </div>
-}

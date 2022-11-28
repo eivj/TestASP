@@ -1,8 +1,42 @@
-﻿@{
+﻿@using TestASP.Models
+@{
     ViewData["Title"] = "Breed Page";
 }
+<div class="row">
+    @foreach (CatBreeds item in Model)
+    {
+             <div class="col-md-4 col-xs-6 border-primary mb-3">
+                    <div class="card mb-3" style="max-width: 500px;">
+                        <div class="row g-0">
+                            <div class="col-md-12">
+                                                    <div class="card-header text-white " style="background-color: #b3b3ff;">
+                                    <p class="card-text">
+                                        <h5 class="card-title">
+                                                @item.Breed
+                                        </h5>
+                                    </p>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <img src="@item.PictureURL" width="100%" alt="a">
+                            </div>
+                            <div class="col-md-6">
+                                <div class="card-body">
+                                    <p class="card-text">@item.Description</p>
 
-<div class="text-center">
+                                </div>
+                            </div>     
+                        </div>
+                    </div>
+             </div> 
+    }
+   
+  
+    
+</div>
+
+ 
+@*<div class="text-center">
     <h1 class="display-4">Breed</h1>
     <p>Many Breedd</p>
 </div>
@@ -28,4 +62,5 @@
          <img src="~/Images/japanese.jpg" width="400"/> <br /> <br />
         10)Exotic Shorthair Cat Breed<br /></p>
          <img src="~/Images/exotic.jpg" width="400"/> <br /> <br />
-</div>
+</div>*@
+

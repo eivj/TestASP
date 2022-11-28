@@ -11,6 +11,7 @@ namespace TestASP.Context
     public class CatContext : IdentityDbContext<User>
     {   
         public DbSet<Cat> cats { get; set; }
+        public DbSet<CatBreeds> catBreeds { get; set; }
         public CatContext(DbContextOptions options) : base(options) { }
 
     }

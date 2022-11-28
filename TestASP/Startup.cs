@@ -82,7 +82,8 @@ namespace TestASP
             app.UseRouting();
             app.UseAuthentication();
             app.UseAuthorization();
-
+            //initial data
+            AppDbInitializer.AddInitialData(app);
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllerRoute(

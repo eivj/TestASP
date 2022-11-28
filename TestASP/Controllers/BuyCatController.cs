@@ -3,7 +3,6 @@ using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.Data.Entity.Core.Metadata.Edm;
 using System.Reflection.Metadata.Ecma335;
 using System.Threading.Tasks;
 using TestASP.Context;

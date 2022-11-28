@@ -47,7 +47,7 @@ namespace TestASP.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "cats",
+                name: "Cat",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
@@ -59,7 +59,7 @@ namespace TestASP.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_cats", x => x.Id);
+                    table.PrimaryKey("PK_Cat", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -226,7 +226,7 @@ namespace TestASP.Migrations
                 name: "AspNetUserTokens");
 
             migrationBuilder.DropTable(
-                name: "cats");
+                name: "Cat");
 
             migrationBuilder.DropTable(
                 name: "AspNetRoles");
